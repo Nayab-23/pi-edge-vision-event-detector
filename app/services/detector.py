@@ -32,6 +32,18 @@ class MotionDetector:
             self._hog = cv2.HOGDescriptor()
             self._hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
+    def update_config(self, config: dict[str, Any]) -> None:
+        enabled = bool(config.get("advanced_detection_enabled", False))
+        self.settings.advanced_detection_enabled = enabled
+        self.settings.min_motion_area_ratio = float(config.get("min_motion_area_ratio", self.settings.min_motion_area_ratio))
+        self.settings.sensitivity = float(config.get("sensitivity", self.settings.sensitivity))
+
+        if enabled and self._hog is None:
+            self._hog = cv2.HOGDescriptor()
+            self._hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
+        elif not enabled:
+            self._hog = None
+
     def process(self, frame: np.ndarray, timestamp: float) -> DetectionResult:
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (21, 21), 0)

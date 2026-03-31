@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block page_id %}dashboard{% endblock %}
+
+{% block content %}
+  <section class="status-strip">
+    <div class="status-card">
+      <span class="label">Input Mode</span>
+      <strong id="status-source">Loading</strong>
+    </div>
+    <div class="status-card">
+      <span class="label">Frames Processed</span>
+      <strong id="status-frames">0</strong>
+    </div>
+    <div class="status-card">
+      <span class="label">Total Events</span>
+      <strong id="status-events">0</strong>
+    </div>
+    <div class="status-card">
+      <span class="label">Last Event</span>
+      <strong id="status-last-event">n/a</strong>
+    </div>
+  </section>
+
+  <section class="panel-grid">
+    <article class="panel">
+      <div class="panel-heading"><h2>Live Preview</h2></div>
+      <img id="live-preview" class="preview-image" alt="Latest annotated frame">
+      <div class="preview-meta">
+        <span id="status-message"></span>
+        <span id="detection-summary"></span>
+      </div>
+    </article>
+
+    <article class="panel">
+      <div class="panel-heading"><h2>Detection Statistics</h2></div>
+      <div class="metric-grid">
+        <div class="metric"><span>Last Label</span><strong id="metric-label">-</strong></div>
+        <div class="metric"><span>Motion Ratio</span><strong id="metric-motion">-</strong></div>
+        <div class="metric"><span>Contours</span><strong id="metric-contours">-</strong></div>
+        <div class="metric"><span>Advanced Detection</span><strong id="metric-advanced">-</strong></div>
+        <div class="metric"><span>Camera Available</span><strong id="metric-picam">-</strong></div>
+        <div class="metric"><span>USB Candidates</span><strong id="metric-usb">-</strong></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="panel-grid">
+    <article class="panel">
+      <div class="panel-heading"><h2>Recent Events</h2></div>
+      <div id="event-history" class="event-grid"></div>
+    </article>
+
+    <article class="panel">
+      <div class="panel-heading"><h2>Run Log</h2></div>
+      <div id="run-log" class="list-stack"></div>
+    </article>
+  </section>
+{% endblock %}

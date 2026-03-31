@@ -44,6 +44,12 @@ class EventRecorder:
         self._active: _ActiveRecording | None = None
         self._last_event_timestamp = 0.0
 
+    def update_config(self, config: dict[str, Any]) -> None:
+        self.settings.cooldown_seconds = float(config.get("cooldown_seconds", self.settings.cooldown_seconds))
+        self.settings.pre_event_seconds = float(config.get("pre_event_seconds", self.settings.pre_event_seconds))
+        self.settings.post_event_seconds = float(config.get("post_event_seconds", self.settings.post_event_seconds))
+        self._buffer = deque(self._buffer, maxlen=max(1, int(self.settings.pre_event_seconds * self.settings.poll_fps)))
+
     def process(
         self,
         frame: np.ndarray,
@@ -127,7 +133,7 @@ class EventRecorder:
             created_at=active.created_at,
             event_label=active.event_label,
             motion_ratio=active.motion_ratio,
-            snapshot_path=str(active.snapshot_path),
-            clip_path=str(active.clip_path),
+            snapshot_path=active.snapshot_path.relative_to(self.media_root).as_posix(),
+            clip_path=active.clip_path.relative_to(self.media_root).as_posix(),
             metadata={**active.metadata, "source_mode": source_mode, "frame_count": len(active.frames)},
         )

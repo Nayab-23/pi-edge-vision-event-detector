@@ -10,9 +10,10 @@ class RetentionManager:
     def __init__(self, settings: Settings, store: EventStore) -> None:
         self.settings = settings
         self.store = store
+        self.media_root = Path(settings.media_root).expanduser().resolve()
 
-    def prune(self) -> dict[str, int]:
-        stale = self.store.stale_media(self.settings.retention_days, self.settings.max_event_count)
+    def prune(self, retention_days: int, max_event_count: int) -> dict[str, int]:
+        stale = self.store.stale_media(retention_days, max_event_count)
         deleted_files = 0
         deleted_events = 0
         for row in stale:
@@ -20,7 +21,7 @@ class RetentionManager:
                 path = row.get(path_key)
                 if not path:
                     continue
-                candidate = Path(path)
+                candidate = self.media_root / path
                 if candidate.exists():
                     candidate.unlink(missing_ok=True)
                     deleted_files += 1

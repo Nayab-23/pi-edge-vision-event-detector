@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} · Pi Edge Vision</title>
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body data-page="{% block page_id %}dashboard{% endblock %}">
+    <div class="page-shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Pi Edge Vision Event Detector</p>
+          <h1>{{ page_title }}</h1>
+          <p class="lede">Local-first Raspberry Pi event detection with camera fallback, clip recording, and reviewable metadata.</p>
+        </div>
+        <nav class="nav-links">
+          <a href="/">Dashboard</a>
+          <a href="/config">Configuration</a>
+          <a href="/api/summary">API Summary</a>
+        </nav>
+      </header>
+      <main class="content">
+        {% block content %}{% endblock %}
+      </main>
+    </div>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
