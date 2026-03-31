@@ -1,0 +1,19 @@
+[Unit]
+Description=Pi Edge Vision Event Detector
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=nayab
+WorkingDirectory=/home/nayab/embedded-monthly-builds/embedded-monthly-builds/projects/pi-edge-vision-event-detector
+EnvironmentFile=-/home/nayab/embedded-monthly-builds/embedded-monthly-builds/projects/pi-edge-vision-event-detector/.env
+ExecStart=/home/nayab/embedded-monthly-builds/embedded-monthly-builds/projects/pi-edge-vision-event-detector/scripts/run_prod.sh
+Restart=always
+RestartSec=5
+TimeoutStopSec=15
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
